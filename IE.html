@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<script language="Javascript">
+function window_onload() {
+	try {
+		var newLoc = '';
+		var oWin = external.menuArguments;
+		var oDoc = oWin.top.document;
+		var oElement = oWin.event.srcElement;
+		var sLink = "http://www.zhibotie.net/index.php?from=IE&uri=";	
+		var surl;
+		
+		if ((oElement) && (oElement.tagName == "A")) {
+			surl = oElement.href;
+		} else {
+			surl = external.menuArguments.location.href;
+		}	
+		if((surl.indexOf("tianya.cn")!=-1) || (surl.indexOf("tieba.baidu.com")!=-1) || (surl.indexOf("douban.com")!=-1)){
+			surl = sLink +encodeURIComponent(surl);
+		}else{
+			alert("请确保你是在豆瓣、天涯、百度贴吧进行操作");
+			}
+		if(surl=='http://www.zhibotie.net/IE.html'){
+			oDoc.location.href = "http://www.zhibotie.net/";
+		}else{
+			oDoc.location.href = surl;
+		}
+		
+	} catch(ex) {
+	}
+}
+</script></head><body onLoad="window_onload();"></body></html>
