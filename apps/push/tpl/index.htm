@@ -1,0 +1,69 @@
+<!--{eval $_TPL['titles'] = array('图片集');}-->
+<!--{eval $_TPL['nosidebar']=1;}-->
+<!--{template header}-->
+<link rel="stylesheet" type="text/css" href="{$public_js}/public/public.css"/>
+<div class="clear">
+	<div class="list">
+		<ul class="clear" id="content">
+        	<!--{if $list}-->
+            <!--{loop $list $value}-->
+            <!--{if !$value['image']}-->
+			<li class="article post" data-id="$value['ids']">
+                <a href="space.php?do=doing&doid=$value['ids']" class="link">
+                <span class="text">
+                <strong>$value['title']</strong>
+                <em>$value['desc']</em>
+                </span>
+                </a>
+			</li>
+            <!--{else}-->
+			<li class="photo post" data-id="$value['ids']">
+                <a href="apps.php?m=push&option=view&id=$value['ids']" class="link">
+                <span class="img">
+                	<img src="$value['image']" alt="$value['title']"/>
+                	<span class="arr"><span></span></span>
+                </span>
+                <span class="text">
+                	<strong>$value['title']</strong>
+                	<em>$value['desc']</em>
+                </span>
+                </a>
+			</li>
+            <!--{/if}-->
+            <!--{/loop}-->
+            <!--{/if}-->
+		</ul>
+	</div>
+
+
+    	<div class="page clear">
+            <div class="pages">
+                <a href="apps.php?m=push&page=<!--{eval echo intval($page + 1)}-->">下一页</a>
+            </div>
+		</div>
+</div>
+<script id="setwaterfall" src="{$public_js}/public/jquery.masonry.min.js"></script>
+<script id="setwaterfall" src="{$public_js}/public/jquery.infinitescroll.min.js"></script>
+<script type="text/javascript">
+$(function(){
+var container = $('#content');
+$('#content').infinitescroll({
+    navSelector  : "div.page .pages",            
+    nextSelector : "div.page .pages a:first",    
+    itemSelector : ".post"          
+  }, function( newElements ) {
+		var newElems = $( newElements );
+		container.masonry( 'appended', newElems );
+  });
+  
+  
+   $('#content').masonry({
+    itemSelector : '.post',
+    columnWidth : 251
+  });
+
+  
+});
+</script>
+
+<!--{template footer}-->

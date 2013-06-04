@@ -1,0 +1,57 @@
+<!--{template apps/wap/tpl/header}-->
+<div id="bd">
+<!--{if $subject}-->  
+<div id="md-group-entry" class="mod">
+<div class="bd">
+    <h2>$subject['subject'] <!--{if $page > 1}-->-回应<!--{/if}--></h2> 
+    <div class="entry item">
+      <span class="info">
+    <a href="/people/51760634/groups?session=a8df978a_60003124" class="founder">$subject['author']</a>
+ | $subject['dateline']</span>
+ 	<!--{if $page == 1}-->
+ 	<br>
+	  $subject['message']
+	<br>
+    <!--{/if}-->
+<span class="rel">
+$subject['replies']人回复 | <a href="#">快速回复</a></span>
+    </div>
+    <!--{/if}-->
+
+<h3 class="comment">作者发言
+  <span>($count)</span>
+</h3>
+
+<!--{if $list}-->
+<div class="list">
+	<!--{loop $list $value}-->
+    <!--{eval $i++}-->
+    <div class="item<!--{if $i == $pagesize}--> last <!--{/if}-->" id="list_$value['pid']">
+    <span class="info"><a href="#">$value['author']</a>  $value['dateline']</span>
+    <a href="javascript:;" title="我看到这了" onClick="mark($value['tid'],$value['pid'],$value['num'])" style="float:right;"><<<我看到这了</a>
+    <p>$value['message']</p>
+  </div>
+  <!--{/loop}-->
+</div>
+<!--{/if}-->
+<!--{if $pagecount >= $page}-->
+                    <div class="paginator">
+                       <!--{if $pagecount > 1}-->
+                      <a href="apps.php?m=wap&option=view&tid=$tid&page=<!--{eval echo $page + 1}-->">下一页</a> |
+                      <a href="apps.php?m=wap&option=view&tid=$tid&page=$pagecount">最后页</a> |
+                       <!--{/if}-->
+                             <span> $page/$pagecount </span>
+                       <!--{if $pagecount > 1 && $page > 1}-->
+                        | <a href="apps.php?m=wap&option=view&tid=$tid&page=<!--{eval echo $page - 1}-->">上一页</a> |
+                      <a href="apps.php?m=wap&option=view&tid=$tid&&page=1">第一页</a>
+                       <!--{/if}-->
+                    </div>
+                    <!--{/if}-->
+
+</div>
+<div class="ft">
+    <a href="apps.php?m=wap&option=index&tags=<!--{if $subject['tags']}-->$subject['tags']<!--{else}-->fid=$subject['fid']<!--{/if}-->">返回  <!--{if $subject['tags']}-->$subject['tags']<!--{else}--><!--{if $subject[fid] == 0 }-->豆瓣网<!--{elseif $subject['fid'] == 1}-->百度贴吧<!--{elseif $subject['fid'] == 2}-->天涯论坛<!--{/if}--><!--{/if}--></a>
+</div>
+</div>
+</div>
+<!--{template apps/wap/tpl/footer}-->

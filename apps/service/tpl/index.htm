@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>意见与反馈</title>
+<script src="source/jquery-1.7.1.min.js"></script>
+<script src="source/dialog/artDialog.js?skin=green"></script>
+<script src="source/dialog/plugins/iframeTools.js"></script>
+<link rel="stylesheet" type="text/css" href="apps/commont/css/mini.css">
+</head>
+<body>
+<div style="background:#FAFBDD; display:none; padding:3px; color:red;" id="show_error"></div>
+<form id="login-form" action="#" method="post" target="">
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="2"><div style="text-align:left; color:#000000; padding-bottom:10px;"><h3 style="font-weight:bold; font-size:14px;">说说您使用直播贴的感受：</h3>&nbsp;&nbsp;&nbsp;将您对直播贴的建议或者想法告诉我们吧，我们将随时倾听你的意见或想法。</div></td>
+    </tr>
+  <tr>
+    <td width="1%">&nbsp;</td>
+    <td width="99%" align="left">
+    <p><label>昵 &nbsp;&nbsp;&nbsp; 称：&nbsp;<input id="login-form-username" name="user" value="" type="text"></label></p>
+<p><label>邮箱地址：<input id="login-form-mail" name="mail" value="" type="text"></label></p>
+<p><label><span style="float:left;">反馈内容：</span>
+<span style="float:left;"><textarea name="login-form-content" style="width:300px; height:80px;" id="login-form-content" maxlength="1000"></textarea></span></label></p>    
+    </td>
+  </tr>
+</table>
+</form>
+<script>
+(function () {
+
+var dialog = art.dialog,
+	parent = dialog.parent,	
+	api = dialog.open.api,
+	form = $('#login-form'),
+	username = $('#login-form-username'),
+	email = $('#login-form-mail'),
+	content = $("#login-form-content"),
+	regemail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+
+
+var  show_error = function(a, c) {
+	$("#" + a).css("display", "block");
+	$("#" + a).html(c)
+}
+
+api.title("给我们意见")
+    .button({
+		name:'提交',
+		callback:function(){
+			if (username.val()  == "") {
+						show_error("show_error", "难道你想学雷锋做好事不留名么？");
+						$("#login-form-username").focus();
+						return false
+					}
+					if ($("#login-form-mail").val() != "" && !regemail.test($("#login-form-mail").val())) {
+						show_error("show_error", "你搞什么嘛，邮件地址也写错了 ):");
+						$("#login-form-mail").focus();
+						return false
+					}
+					if ($("#login-form-content").val().length <= 0) {
+						show_error("show_error", "提意见\\建议什么的总得写点什么是吧");
+						$("#login-form-content").focus();
+						return false
+					}
+					if ($("#login-form-content").val().length >= 500) {
+						show_error("show_error", "写那么多，直接通过邮件发给我们吧:no-reply@zhibotie.net");
+						$("#login-form-content").focus()
+					}else{
+						jQuery.get("apps.php?m=service&a=index&option=submit", "author=" + escape2($("#login-form-username").val()) + "&subject=" + escape2($("#login-form-content").val()) + "&email=" + escape2($("#login-form-mail").val()) + "&t=" + (new Date).getTime(), function(data) {
+						data = eval("("+data+")");
+						if (data.status) {
+							dialog.close();
+							dialog.tips(data.message);
+						} else alert("抱歉，系统错误");
+						return false;
+					});
+					return false;
+					}
+			},
+		focus:true
+		},{
+		name:"取消"	
+			});
+
+var inputError = function(input) {
+		clearTimeout(inputError.timer);
+		var num = 0;
+		var fn = function() {
+				inputError.timer = setTimeout(function() {
+					input.className = input.className === '' ? 'login-form-error' : '';
+					if (num === 5) {
+						input.className === ''
+					} else {
+						fn(num++)
+					}
+				}, 150)
+			};
+		fn()
+	};
+	
+var escape2 = function(a) {
+	return escape(a).replace(/\+/g, "%2b").replace(/\./g, "%2e")
+}
+
+window.onload = function () {setTimeout(function () {username.focus()}, 240);};
+})();
+
+</script>
+</body>
+</html>
+

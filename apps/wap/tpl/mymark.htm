@@ -1,0 +1,13 @@
+<!--{template apps/wap/tpl/header}-->
+<h3 style='font-size:16px;font-weight:bold;color:#494949'>注：登陆后mark记号将永久保存</h3>
+<div class="list">
+                    	<!--{if $mylist}-->
+                        <!--{loop $mylist $value}-->
+                        <!--{if $value['subject']}--><div class="item"><a href="apps.php?m=wap&option=view&tid=$value['tid']&page=$value['page']#list_$value['pid']">$value['subject']</a><span>($value['views'])| 来自：<a href="apps.php?m=wap&option=index&fid=$value['fid']" class="founder"><!--{if $value['fid'] ==0 }-->豆瓣网<!--{elseif $value['fid'] == 1}-->百度贴吧<!--{elseif $value['fid'] == 2}-->天涯论<!--{/if}--></a>  <!--{if $value['tags']}--><a href="apps.php?m=wap&option=index&tags=$value['tags']" class="founder">$value['tags']</a><!--{/if}-->|<span class="date">$value['dateline']</span></span></div>
+                        <!--{/if}-->
+                        <!--{/loop}-->
+                        <!--{else}-->
+                        你还没有mark任何帖子
+                        <!--{/if}-->
+            		</div>
+<!--{template apps/wap/tpl/footer}-->

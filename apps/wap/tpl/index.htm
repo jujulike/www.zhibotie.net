@@ -1,0 +1,29 @@
+<!--{eval $_TPL['titles'] = array('豆油');}-->
+<!--{template apps/wap/tpl/header}-->
+		<div id="bd">
+                <div class="mod">
+                    <h3 style='font-size:16px;font-weight:bold;color:#494949'>
+                    <a href="apps.php?m=wap&fid=all">首页</a>|<a href="apps.php?m=wap&fid=0">豆瓣网</a>|<a href="apps.php?m=wap&fid=2">天涯论坛</a>|<a href="apps.php?m=wap&fid=1">百度贴吧</a></h3>
+                    <div class="list">
+                    	<!--{if $list}-->
+                        <!--{loop $list $value}-->
+                        <!--{if $value['subject']}--><div class="item"><a href="apps.php?m=wap&option=view&tid=$value['tid']">$value['subject']</a><span>($value['views'])| 来自：<a href="apps.php?m=wap&option=index&fid=$value['fid']" class="founder"><!--{if $value['fid'] ==0 }-->豆瓣网<!--{elseif $value['fid'] == 1}-->百度贴吧<!--{elseif $value['fid'] == 2}-->天涯论<!--{/if}--></a>  <!--{if $value['tags']}--><a href="apps.php?m=wap&option=index&tags=$value['tags']" class="founder">$value['tags']</a><!--{/if}-->|<span class="date">$value['dateline']</span></span></div>
+                        <!--{/if}-->
+                        <!--{/loop}-->
+                        <!--{/if}-->
+            		</div>
+                    <!--{if $pagecount >= $page}-->
+                    <div class="paginator">
+                       <!--{if $pagecount > 1}-->
+                      <a href="apps.php?m=wap&option=index&fid=$fid&tags=$tags&page=<!--{eval echo $page + 1}-->">下一页</a> |
+                      <a href="apps.php?m=wap&option=index&fid=$fid&tags=$tags&page=$pagecount">最后页</a> |
+                       <!--{/if}-->
+                             <span> $page/$pagecount </span>
+                       <!--{if $pagecount > 1 && $page > 1}-->
+                        | <a href="apps.php?m=wap&option=index&fid=$fid&tags=$tags&page=<!--{eval echo $page - 1}-->">上一页</a> |
+                      <a href="apps.php?m=wap&option=index&fid=$fid&tags=$tags&page=1">第一页</a>
+                       <!--{/if}-->
+                    </div>
+                    <!--{/if}-->
+          </div>
+<!--{template apps/wap/tpl/footer}-->

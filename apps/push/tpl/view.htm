@@ -1,0 +1,46 @@
+<!--{eval $_TPL['titles'] = array($subject['name'] . '  图片集');}-->
+<!--{eval $_TPL['nosidebar']=1;}-->
+<!--{template header}-->
+<div class="clear">
+	<div class="list">
+		<ul class="clear" id="content">
+            <!--{if $list}-->
+            <!--{loop $list $value}-->
+			<li class="photo post" data-id="$value['id']">
+
+                	<img src="$value['path']" alt="$value['name']"/>
+
+			</li>
+            <!--{/loop}-->
+            <!--{/if}-->
+		</ul>
+	</div>
+
+
+    	<div class="page clear">
+            <div class="pages">
+                <a href="apps.php?m=push&option=view&page=<!--{eval echo intval($page + 1)}-->">下一页</a>
+            </div>
+		</div>
+</div>
+<script id="setwaterfall" src="{$public_js}/public/jquery.masonry.min.js"></script>
+<script id="setwaterfall" src="{$public_js}/public/jquery.infinitescroll.min.js"></script>
+<script type="text/javascript">
+$(function(){
+var container = $('#content');
+$('#content').infinitescroll({
+    navSelector  : "div.page .pages",            
+    nextSelector : "div.page .pages a:first",    
+    itemSelector : ".post"          
+  }, function( newElements ) {
+		var newElems = $( newElements );
+		container.masonry( 'appended', newElems );
+  });
+  
+   $('#content').masonry({
+    itemSelector : '.post',
+    columnWidth : 251
+  }); 
+});
+</script>
+<!--{template footer}-->

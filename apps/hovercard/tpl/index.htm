@@ -1,0 +1,36 @@
+<!--{if $userlist}-->
+<div class="bm_hover_card_content udline">
+    <div class="bm_hover_card_avator">
+        <a href="space.php?uid=$userlist[uid]"><!--{avatar($userlist[uid])}--></a>
+    </div>
+	<div class="bm_hover_card_name">
+    	<a href="space.php?uid=$userlist[uid]">$userlist['username']</a>
+        <img src="apps/hovercard/public/images/transparent.gif" class="male" height="14" width="14" />
+    </div>
+	<div class="bm_hover_card_from"><!--{if $userlist['resideprovince']}--><span>$userlist['resideprovince']</span><span>$userlist[residecity]</span><!--{else}--><span>未知区域</span><!--{/if}--></div>
+	<div class="bm_hover_card_signaure"><!--{if $userlist[note] != ''}-->$userlist[note]<!--{else}-->这家伙很懒，什么都没留下<!--{/if}--></div>
+	<div class="clear"></div>
+    <div class="bm_hover_card_info">
+        <p><a href="space.php?do=friend&uid=$userlist[uid]">好友</a><a href="space.php?do=doing&uid=$userlist[uid]">微博</a><a href="space.php?do=blog&uid=$userlist[uid]">日志</a><a href="space.php?do=album&uid=$userlist[uid]">相册</a></p>
+        <p><span>$userlist[friendnum]</span><span>$userlist[doingnum]</span><span>$userlist[blognum]</span><span>$userlist[albumnum]</span></p>
+    </div>
+</div>
+<div class="bm_hover_card_bar">
+	<!--{if $uid == $_SGLOBAL[supe_uid]}-->
+		<a href="javascript:;" class="btn_self" id="bm_hover_card_content_btn"></a>
+    <!--{elseif ($isfriend)}-->
+    	<a href="cp.php?ac=pm&uid=$uid" onclick="ajaxmenu(event, this.id, 1);" id="ajax_pm" style="float:left; margin-left:10px;">私信</a>
+    	<a href="javascript:;" onclick="had_follow($uid);" class="had_follow" id="bm_hover_card_had_follow_btn"></a>
+    <!--{else}-->
+    	<a href="javascript:;" onclick="add_follow($uid);" class="add_follow" id="bm_hover_card_add_follow_btn"></a>
+    <!--{/if}-->
+</div>
+<!--{else}-->
+<div class="bm_hover_card" style="top: 211px; left: 555.5px;">
+    <div class="bm_hover_card_arrow"></div>
+    <div class="bm_hover_card_border"></div>
+    <div class="bm_hover_card_container">
+    	<div class="bm_hover_card_before">系统错误....</div>
+    </div>
+</div>
+<!--{/if}-->
